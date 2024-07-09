@@ -40,7 +40,7 @@ jobs:
           # Elimina el contenido actual
           rm -rf *
           # Copia los nuevos archivos
-            cp -r ${{ github.workspace }}/dist/* .
+            cp -r ${{ github.workspace }}/dist/ * .
           # Crear archivo .htaccess
           echo "<IfModule mod_rewrite.c>
             RewriteEngine On
