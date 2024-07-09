@@ -1,0 +1,51 @@
+name: Deploy Vue 3 App to Hostinger
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16' # Puedes ajustar la versión según tus necesidades
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build project
+      run: yarn build
+
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: 154.56.47.164
+        username: u278914533
+        key: Shark32.
+        port: 65002
+        script: |
+          # Cambia a tu directorio de publicación
+          cd domains/nueva.gruposafeguard.com/public_html
+          # Elimina el contenido actual
+          rm -rf *
+          # Copia los nuevos archivos
+          cp -r ${{ github.workspace }}/dist/* .
+          # Crear archivo .htaccess
+          echo "<IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteBase /
+            RewriteRule ^index\.html$ - [L]
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteRule . /index.html [L]
+            RewriteCond %{HTTPS} off
+            RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+          </IfModule>" > .htaccess
