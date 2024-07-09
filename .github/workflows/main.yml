@@ -39,5 +39,6 @@ jobs:
         username: u278914533
         password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: 65002
-        source: "$GITHUB_WORKSPACE/dist/*"
+        source: "dist/**"
         target: "domains/nueva.gruposafeguard.com/public_html"
+        strip_components: 1
