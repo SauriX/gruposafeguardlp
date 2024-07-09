@@ -25,7 +25,7 @@ jobs:
       run: yarn build
 
     - name: List files recursively in dist directory
-      run: ls -R $GITHUB_WORKSPACE/gruposafeguardlp/dist
+      run: ls -R $GITHUB_WORKSPACE
 
     - name: Deploy via SSH
       uses: appleboy/ssh-action@master
