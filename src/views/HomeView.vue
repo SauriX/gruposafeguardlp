@@ -73,7 +73,7 @@ var nostrosbg = 'plantas.png';
 
 const empresas: Ref<Iempresa[]> = ref([{
   img: 'covid.png',
-  title: '',
+  title: 'q',
   subtitle: '',
   colorButon: '#10BF97',
   secondaryColorButon: '#084861',
