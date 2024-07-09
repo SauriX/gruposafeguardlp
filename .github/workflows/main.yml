@@ -29,7 +29,7 @@ jobs:
       with:
         host: 154.56.47.164
         username: u278914533
-        key: Shark32.
+        key: ${{ secrets.HOSTINGER_SSH_KEY }}
         port: 65002
         script: |
           # Cambia a tu directorio de publicación
