@@ -40,7 +40,7 @@ jobs:
           # Elimina el contenido actual
           rm -rf *
           # Copia los nuevos archivos desde la ubicación correcta
-          cp -r /home/runner/work/gruposafeguardlp/gruposafeguardlp/dist/. .
+          cp -r home/runner/work/gruposafeguardlp/gruposafeguardlp/dist/. .
           # Crear archivo .htaccess
           echo "<IfModule mod_rewrite.c>
             RewriteEngine On
