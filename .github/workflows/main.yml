@@ -47,6 +47,9 @@ jobs:
         mkdir -p ~/.ssh
         ssh-keyscan -p 65002 154.56.47.164 >> ~/.ssh/known_hosts
 
+    - name: List files in dist directory before scp
+      run: ls -al $GITHUB_WORKSPACE/dist
+
     - name: Copy files via scp
       uses: appleboy/scp-action@v0.1.7
       with:
