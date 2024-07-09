@@ -24,6 +24,12 @@ jobs:
     - name: Build project
       run: yarn build
 
+    - name: List files for debugging
+      run: ls -la $GITHUB_WORKSPACE
+
+    - name: List files in dist for debugging
+      run: ls -la $GITHUB_WORKSPACE/dist
+
     - name: Deploy via SSH
       uses: appleboy/ssh-action@master
       with:
@@ -37,7 +43,7 @@ jobs:
           # Elimina el contenido actual
           rm -rf *
           # Copia los nuevos archivos
-          cp -r ${{ github.workspace }}/dist/* .
+          cp -r $GITHUB_WORKSPACE/dist/* .
           # Crear archivo .htaccess
           echo "<IfModule mod_rewrite.c>
             RewriteEngine On
