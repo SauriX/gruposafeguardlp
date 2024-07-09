@@ -32,13 +32,13 @@ jobs:
         mkdir -p ~/.ssh
         ssh-keyscan -p 65002 154.56.47.164 >> ~/.ssh/known_hosts
 
-    - name: Copy files via ssh
-      uses: appleboy/ssh-action@master
+    - name: Copy files via scp
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: 154.56.47.164
         username: u278914533
         password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: 65002
-        script: |
-          rm -rf ~/domains/nueva.gruposafeguard.com/public_html/*
-          scp -r $GITHUB_WORKSPACE/dist/* u278914533@154.56.47.164:~/domains/nueva.gruposafeguard.com/public_html
+        source: "dist/*"
+        target: "domains/nueva.gruposafeguard.com/public_html"
+        rm: true
