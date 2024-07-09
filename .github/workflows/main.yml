@@ -27,30 +27,15 @@ jobs:
 
     - name: List files recursively in dist directory
       run: ls -R $GITHUB_WORKSPACE/dist
-      
 
-    - name: Deploy via SSH
-      uses: appleboy/ssh-action@master
+
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: 154.56.47.164
         username: u278914533
         password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: 65002
-        script: |
-          # Cambia a tu directorio de publicación
-          cd domains/nueva.gruposafeguard.com/public_html
-          # Elimina el contenido actual
-          rm -rf *
-          # Copia los nuevos archivos desde la ubicación correcta
-          cp -R $GITHUB_WORKSPACE/dist .
-          # Crear archivo .htaccess
-          echo "<IfModule mod_rewrite.c>
-            RewriteEngine On
-            RewriteBase /
-            RewriteRule ^index\.html$ - [L]
-            RewriteCond %{REQUEST_FILENAME} !-f
-            RewriteCond %{REQUEST_FILENAME} !-d
-            RewriteRule . /index.html [L]
-            RewriteCond %{HTTPS} off
-            RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-          </IfModule>" > .htaccess
+        source: $GITHUB_WORKSPACE/dist
+        target: domains/nueva.gruposafeguard.com/public_html
+
