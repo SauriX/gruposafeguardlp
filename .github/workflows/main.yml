@@ -52,11 +52,4 @@ jobs:
             RewriteCond %{HTTPS} off
             RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
           </IfModule>" > .htaccess
-     ```
-
-### Prueba y seguimiento:
-
-- Después de realizar estos ajustes, realiza un nuevo commit y push a tu repositorio.
-- Observa los logs en GitHub Actions para verificar si los archivos se listan correctamente y si el despliegue se realiza sin errores.
-
-Estos pasos deberían ayudarte a resolver el problema y asegurarte de que los archivos de tu aplicación Vue 3 se desplieguen correctamente en Hostinger usando GitHub Actions. Si el problema persiste o surgen otros errores, házmelo saber para que pueda proporcionarte más asistencia.
+    
