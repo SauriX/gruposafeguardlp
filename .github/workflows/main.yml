@@ -24,18 +24,15 @@ jobs:
     - name: Build project
       run: yarn build
       
-
-    - name: List files recursively in dist directory
-      run: ls -R $GITHUB_WORKSPACE/dist
-
+    - name: List files in dist directory
+      run: ls -al $GITHUB_WORKSPACE/dist
 
     - name: copy file via ssh password
-      uses: appleboy/scp-action@v0.1.7
+      uses: appleboy/scp-action@v0.1.8
       with:
         host: 154.56.47.164
         username: u278914533
         password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: 65002
-        source: $GITHUB_WORKSPACE/dist/. .
+        source: $GITHUB_WORKSPACE/dist/*
         target: domains/nueva.gruposafeguard.com/public_html
-
