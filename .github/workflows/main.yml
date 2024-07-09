@@ -24,9 +24,7 @@ jobs:
     - name: Build project
       run: yarn build
       
-    - name: Checkout
-      uses: actions/checkout@v2
-      
+
     - name: List files recursively in dist directory
       run: ls -R $GITHUB_WORKSPACE/dist
       
