@@ -40,7 +40,7 @@ jobs:
           # Elimina el contenido actual
           rm -rf *
           # Copia los nuevos archivos desde la ubicación correcta
-          cp -r $GITHUB_WORKSPACE/gruposafeguardlp/dist/. .
+          cp -R $GITHUB_WORKSPACE/dist .
           # Crear archivo .htaccess
           echo "<IfModule mod_rewrite.c>
             RewriteEngine On
