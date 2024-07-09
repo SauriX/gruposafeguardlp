@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16' # Puedes ajustar la versión según tus necesidades
+        node-version: '16'
 
     - name: Install dependencies
       run: yarn install
@@ -39,8 +39,8 @@ jobs:
           cd domains/nueva.gruposafeguard.com/public_html
           # Elimina el contenido actual
           rm -rf *
-          # Copia los nuevos archivos
-          cp -r $GITHUB_WORKSPACE/dist/. .
+          # Copia los nuevos archivos desde la ubicación correcta
+          cp -r /home/runner/work/gruposafeguardlp/gruposafeguardlp/dist/. .
           # Crear archivo .htaccess
           echo "<IfModule mod_rewrite.c>
             RewriteEngine On
@@ -52,4 +52,3 @@ jobs:
             RewriteCond %{HTTPS} off
             RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
           </IfModule>" > .htaccess
-    
