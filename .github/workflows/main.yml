@@ -23,9 +23,7 @@ jobs:
 
     - name: Build project
       run: yarn build
-
-
-
+      
     - name: List files in dist directory
       run: ls -al $GITHUB_WORKSPACE/dist
 
@@ -34,27 +32,13 @@ jobs:
         mkdir -p ~/.ssh
         ssh-keyscan -p 65002 154.56.47.164 >> ~/.ssh/known_hosts
 
-    - name: Verify SSH connection
-      uses: appleboy/ssh-action@master
-      with:
-        host: 154.56.47.164
-        username: u278914533
-        key: ${{ secrets.HOSTINGER_SSH_KEY }}
-        port: 65002
-        script: echo "SSH connection successful"
-
-    - name: List files in dist directory before scp
-      run: ls -al $GITHUB_WORKSPACE/dist
-
-    - name: Verify contents of dist directory
-      run: find $GITHUB_WORKSPACE/dist -type f
-
     - name: Copy files via scp
       uses: appleboy/scp-action@v0.1.7
       with:
         host: 154.56.47.164
         username: u278914533
-        key: ${{ secrets.HOSTINGER_SSH_KEY }}
+        password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: 65002
-        source: "$GITHUB_WORKSPACE/dist/**"
+        source: "dist/**"
         target: "domains/nueva.gruposafeguard.com/public_html"
+        strip_components: 1
