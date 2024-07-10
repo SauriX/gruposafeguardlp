@@ -48,29 +48,23 @@ jobs:
         ssh-keyscan -p 65002 154.56.47.164 >> ~/.ssh/known_hosts
 
     - name: Verify SSH connection
-      run: |
-        ssh -p 65002 u278914533@154.56.47.164 'echo "SSH connection successful"'
+      uses: appleboy/ssh-action@master
+      with:
+        host: 154.56.47.164
+        username: u278914533
+        key: ${{ secrets.HOSTINGER_SSH_KEY }}
+        port: 65002
+        script: echo "SSH connection successful"
 
     - name: List files in dist directory before scp
       run: ls -al $GITHUB_WORKSPACE/dist
 
-    - name: Copy files via scp without strip_components
+    - name: Copy files via scp
       uses: appleboy/scp-action@v0.1.7
       with:
         host: 154.56.47.164
         username: u278914533
-        password: ${{ secrets.HOSTINGER_PASSWORD }}
-        port: 65002
-        source: "$GITHUB_WORKSPACE/dist/**"
-        target: "domains/nueva.gruposafeguard.com/public_html"
-
-    - name: Copy files via scp with strip_components
-      if: failure() # Intenta esta opción solo si la anterior falla
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: 154.56.47.164
-        username: u278914533
-        password: ${{ secrets.HOSTINGER_PASSWORD }}
+        key: ${{ secrets.HOSTINGER_SSH_KEY }}
         port: 65002
         source: "$GITHUB_WORKSPACE/dist/**"
         target: "domains/nueva.gruposafeguard.com/public_html"
