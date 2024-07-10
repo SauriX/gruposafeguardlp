@@ -24,20 +24,7 @@ jobs:
     - name: Build project
       run: yarn build
 
-    - name: Create .htaccess file
-      run: |
-        cat <<EOT >> $GITHUB_WORKSPACE/dist/.htaccess
-        <IfModule mod_rewrite.c>
-          RewriteEngine On
-          RewriteBase /
-          RewriteRule ^index\.html$ - [L]
-          RewriteCond %{REQUEST_FILENAME} !-f
-          RewriteCond %{REQUEST_FILENAME} !-d
-          RewriteRule . /index.html [L]
-          RewriteCond %{HTTPS} off
-          RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-        </IfModule>
-        EOT
+
 
     - name: List files in dist directory
       run: ls -al $GITHUB_WORKSPACE/dist
