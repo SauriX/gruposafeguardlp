@@ -62,12 +62,12 @@ jobs:
     - name: Verify contents of dist directory
       run: find $GITHUB_WORKSPACE/dist -type f
 
-    - name: Copy files via scp (simplified)
+    - name: Copy files via scp
       uses: appleboy/scp-action@v0.1.7
       with:
         host: 154.56.47.164
         username: u278914533
         key: ${{ secrets.HOSTINGER_SSH_KEY }}
         port: 65002
-        source: "$GITHUB_WORKSPACE/dist/*"
+        source: "$GITHUB_WORKSPACE/dist/**"
         target: "domains/nueva.gruposafeguard.com/public_html"
