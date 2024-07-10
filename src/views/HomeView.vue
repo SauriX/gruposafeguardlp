@@ -36,6 +36,7 @@
           <div class="col-md-12 text-center">
             Párrafo. Haz clic aquí para agregar tu propio texto y editar. Es fácil. Haz clic en "Editar texto" o doble
             clic aquí para agregar tu contenido y cambiar la fuente.
+            s
           </div>
           <div class="col-12 ">
             <div class="container-sm mt-3">
