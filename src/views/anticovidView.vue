@@ -2,7 +2,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark  sticky-top bg-lav">
         <div class="container">
-            <a class="navbar-brand" href="#">Lavandería Premium</a>
+            <a class="navbar-brand" href="#">Anti Covid</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -12,7 +12,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Inicio</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="false">
                         <a class="nav-link" href="#servi">Servicios</a>
                     </li>
                     <li class="nav-item">
@@ -32,13 +32,35 @@
     <div class="container my-5" id="about">
         <div class="row">
             <div class="col-md-6">
-                <img src="@/assets/img/lp/fondo.png" alt="Calidad Premium" class="img-fluid">
+                <img src="@/assets/img/atc/fmg.png" alt="Calidad Premium" class="img-fluid">
             </div>
             <div class="col-md-6 d-flex flex-column justify-content-center">
-                <h2>Calidad Premium, para clientes Premium.</h2>
-                <p>Una lavandería sustentable que viene a revolucionar el modo de lavado en Chetumal, desde lo más
-                    sencillo hasta lo más importante.</p>
-                <a href="https://api.whatsapp.com/send?phone=5219831392289&text=Buen%20d%C3%ADa%2C%20me%20interesa%20el%20servicio%20de%20recolecci%C3%B3n%20y%20lavado%20para%20negocio." target="_blank" class="btn btn-primary">
+                <h2>Misión y visión</h2>
+                <p>
+                    <span>
+                        En AntiCovid, nuestra misión es ofrecer soluciones eficaces y de alta calidad para la
+                        desinfección
+                        contra el Covid-19 en hogares, empresas y comunidades. Nos esforzamos por brindar servicios
+                        confiables y seguros, utilizando productos químicos biodegradables y las últimas técnicas de
+                        limpieza y desinfección, para asegurar la salud y seguridad de nuestros clientes y la comunidad
+                        en
+                        general.
+                    </span>
+                    <br>
+                    <span>
+                        Nuestra visión es ser líderes en desinfección contra el Covid-19, proporcionando servicios
+                        innovadores y personalizados que satisfagan las necesidades de nuestros clientes. Nos
+                        comprometemos
+                        a mantenernos actualizados con los últimos avances tecnológicos y científicos, y a ser
+                        responsables
+                        con el medio ambiente, utilizando prácticas sostenibles en todo momento. Además, aspiramos a ser
+                        una
+                        empresa socialmente responsable, que contribuya al bienestar de la sociedad y fomente un cambio
+                        positivo en el mundo.
+                    </span>
+                </p>
+                <a href="https://api.whatsapp.com/send?phone=5219831392289&text=Buen%20d%C3%ADa%2C%20me%20interesa%20el%20servicio%20de%20recolecci%C3%B3n%20y%20lavado%20para%20negocio."
+                    target="_blank" class="btn btn-primary">
                     ¡Vamos a chatear!
                 </a>
             </div>
@@ -46,7 +68,7 @@
     </div>
 
     <!-- Testimonials Section -->
-    <div class="testimonials text-center">
+    <div class="testimonials text-center" v-if="false">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -73,8 +95,8 @@
     </div>
 
     <!-- Services Section -->
-    <div class="container my-5 " id="servi">
-        <h2 class="text-center" >Nuestros Servicios</h2>
+    <div class="container my-5 " id="servi" v-if="false">
+        <h2 class="text-center">Nuestros Servicios</h2>
         <div class="row text-center services div-con-scroll">
             <div class="d-flex justify-content-center align-items-center mt-3 col-md-3" v-for="service in services"
                 :key="service.alt">
@@ -106,16 +128,18 @@
     <div class="container my-5">
         <h2 class="text-center">Sucursales</h2>
         <div class="row text-center">
-            <div class="col-md-6">
+            <!-- class="col-md-6" -->
+            <div>
+                <br>
                 <h5>Suc. Erick Paolo</h5>
                 <p>Av. Erick Paolo entre Av. Magisterio y Miguel Alemán</p>
-                <p>Tel: 983 133 81 11</p>
-                <iframe
+                <p>Tel: 9983-454-1073</p>
+                <iframe v-if="false"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.0870457985434!2d-88.31167992420299!3d18.524968169038765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f5ba4a363940a1b%3A0xf33826ef64921713!2sLavanderia%20Premium!5e0!3m2!1ses-419!2smx!4v1720576627889!5m2!1ses-419!2smx"
                     width="600" height="450" style="border:0;" allowfullscreen="false" loading="lazy" class="branch-map"
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" v-if="false">
                 <h5>Suc. Américas I</h5>
                 <p>Av. Luis Manuel Sevilla entre Guyana y Paraguay</p>
                 <p>Tel: 983 139 22 89</p>
@@ -128,7 +152,7 @@
     </div>
 
     <!-- Clients Section -->
-    <div class="container my-5 text-center">
+    <div class="container my-5 text-center" v-if="false">
         <h2>Algunos de nuestros Clientes</h2>
         <div class="row">
             <div class="col-md-2" v-for="client in clients" :key="client.alt">
@@ -242,7 +266,7 @@ const clients: Ref<Iservicios[]> = ref([
 <style lang="css" scoped>
 .hero {
     /* https://placehold.co/1920x600 */
-    background: url('@/assets/img/lp/test.png') no-repeat center center;
+    background: url('@/assets/img/atc/atc.png') no-repeat center center;
     background-size: cover;
     color: white;
     text-align: center;
@@ -298,7 +322,7 @@ footer {
     /* color del scroll al pasar el mouse */
 }
 
-.bg-lav{
-    background-color:#002E5D ;
+.bg-lav {
+    background-color: #002E5D;
 }
 </style>

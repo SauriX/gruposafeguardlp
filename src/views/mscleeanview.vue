@@ -2,7 +2,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark  sticky-top bg-lav">
         <div class="container">
-            <a class="navbar-brand" href="#">Lavandería Premium</a>
+            <a class="navbar-brand" href="#">Ms Clean</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -12,7 +12,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Inicio</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="false">
                         <a class="nav-link" href="#servi">Servicios</a>
                     </li>
                     <li class="nav-item">
@@ -32,21 +32,32 @@
     <div class="container my-5" id="about">
         <div class="row">
             <div class="col-md-6">
-                <img src="@/assets/img/lp/fondo.png" alt="Calidad Premium" class="img-fluid">
+                <img src="@/assets/img/msc/msc.jpg" alt="Calidad Premium" class="img-fluid">
             </div>
             <div class="col-md-6 d-flex flex-column justify-content-center">
-                <h2>Calidad Premium, para clientes Premium.</h2>
-                <p>Una lavandería sustentable que viene a revolucionar el modo de lavado en Chetumal, desde lo más
-                    sencillo hasta lo más importante.</p>
-                <a href="https://api.whatsapp.com/send?phone=5219831392289&text=Buen%20d%C3%ADa%2C%20me%20interesa%20el%20servicio%20de%20recolecci%C3%B3n%20y%20lavado%20para%20negocio." target="_blank" class="btn btn-primary">
-                    ¡Vamos a chatear!
-                </a>
+                <h2> Misión Y Visión</h2>
+                <span>
+                    La misión de Miss Clean es brindar a sus clientes una solución de limpieza y desinfección integral,
+                    rápida y efectiva, con el objetivo de mejorar la calidad de vida de las personas y garantizar la
+                    salud
+                    y seguridad de los ambientes en los que se desenvuelven. La empresa se enfoca en brindar un
+                    servicio personalizado y de calidad, con una atención al cliente excepcional y un enfoque en la
+                    satisfacción del cliente.
+                </span>
+                <br>
+                <span>
+                    La visión de Miss Clean es convertirse en la empresa líder en limpieza y desinfección de hogares y
+                    negocios en la ciudad de Chetumal, ofreciendo servicios innovadores y eficientes que mejoren la
+                    calidad de vida de las personas y contribuyan a un entorno más saludable. La empresa busca
+                    expandirse a nuevas ciudades y regiones, con la misión de ayudar a más personas a mantener sus
+                    hogares y negocios limpios y saludables
+                </span>
             </div>
         </div>
     </div>
 
     <!-- Testimonials Section -->
-    <div class="testimonials text-center">
+    <div class="testimonials text-center" v-if="false">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -73,8 +84,8 @@
     </div>
 
     <!-- Services Section -->
-    <div class="container my-5 " id="servi">
-        <h2 class="text-center" >Nuestros Servicios</h2>
+    <div class="container my-5 " id="servi" v-if="false">
+        <h2 class="text-center">Nuestros Servicios</h2>
         <div class="row text-center services div-con-scroll">
             <div class="d-flex justify-content-center align-items-center mt-3 col-md-3" v-for="service in services"
                 :key="service.alt">
@@ -103,7 +114,7 @@
     </div>
 
     <!-- Branches Section -->
-    <div class="container my-5">
+    <div class="container my-5" v-if="false">
         <h2 class="text-center">Sucursales</h2>
         <div class="row text-center">
             <div class="col-md-6">
@@ -128,7 +139,7 @@
     </div>
 
     <!-- Clients Section -->
-    <div class="container my-5 text-center">
+    <div class="container my-5 text-center" v-if="false">
         <h2>Algunos de nuestros Clientes</h2>
         <div class="row">
             <div class="col-md-2" v-for="client in clients" :key="client.alt">
@@ -242,7 +253,7 @@ const clients: Ref<Iservicios[]> = ref([
 <style lang="css" scoped>
 .hero {
     /* https://placehold.co/1920x600 */
-    background: url('@/assets/img/lp/test.png') no-repeat center center;
+    background: url('@/assets/img/msc/mscl.png') no-repeat center center;
     background-size: cover;
     color: white;
     text-align: center;
@@ -298,7 +309,7 @@ footer {
     /* color del scroll al pasar el mouse */
 }
 
-.bg-lav{
-    background-color:#002E5D ;
+.bg-lav {
+    background-color: #002E5D;
 }
 </style>

@@ -15,7 +15,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                         <router-link v-for="route in routes" :key="route.name" :to="route.path" class="nav-item active">
-                            {{ route.name }}
+                            {{ route.meta!.realname }}
                         </router-link>
                     </div>
                 </div>

@@ -80,7 +80,7 @@ const empresas: Ref<Iempresa[]> = ref([{
   secondaryColorButon: '#084861',
   textcolor: 'white',
   textcolorbtn: 'white',
-  name: 'about'
+  name: 'anticovid'
 }, {
   img: 'pest.png',
   title: '',
@@ -89,7 +89,7 @@ const empresas: Ref<Iempresa[]> = ref([{
   secondaryColorButon: '#084861',
   textcolor: 'white',
   textcolorbtn: 'white',
-  name: ''
+  name: 'pest'
 }, {
   img: 'premium.png',
   title: '',
@@ -98,7 +98,7 @@ const empresas: Ref<Iempresa[]> = ref([{
   secondaryColorButon: '#084861',
   textcolor: 'white',
   textcolorbtn: 'white',
-  name: ''
+  name: 'lavanderia'
 }, {
   img: 'missclean.png',
   title: '',
@@ -107,7 +107,7 @@ const empresas: Ref<Iempresa[]> = ref([{
   secondaryColorButon: '#084861',
   textcolor: 'white',
   textcolorbtn: 'white',
-  name: ''
+  name: 'msclean'
 }, {
   img: 'safefire.png',
   title: '',
