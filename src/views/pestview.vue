@@ -32,7 +32,7 @@
     <div class="container my-5" id="about">
         <div class="row">
             <div class="col-md-6">
-                <img src="@/assets/img/pest/fumi.png" alt="Calidad Premium" class="img-fluid">
+                <img src="../assets/img/pest/fumi.jpg" alt="Calidad Premium" class="img-fluid">
             </div>
             <div class="col-md-6 d-flex flex-column justify-content-center">
                 <h2>Misión y visión</h2>
