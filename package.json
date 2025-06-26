@@ -17,6 +17,7 @@
     "vue3-carousel": "^0.3.3"
   },
   "devDependencies": {
+    "@types/webpack-env": "^1.18.8",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-typescript": "~5.0.0",
