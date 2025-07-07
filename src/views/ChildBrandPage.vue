@@ -1,11 +1,11 @@
 <template>
     <div v-if="brandData">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
             <div class="container">
                 <router-link class="navbar-brand" to="/">
-                    <img src="https://dummyimage.com/150x40/000/fff" alt="Grupo Safeguard Logo" height="40"
+                    <img src="@/assets/logos/safeguard/Logo 150x40.png" alt="Grupo Safeguard Logo" height="40"
                         class="me-2">
-                    Grupo Safeguard
+
                 </router-link>
                 <span class="navbar-text ms-3 me-auto">/ {{ brandData.name }}</span>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -246,10 +246,12 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/ProductCard.vue';
 import TestimonialCard from '@/components/TestimonialCard.vue'
 // Para usar Bootstrap Icons, asegúrate de haberlo incluido en public/index.html:
 // <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+const hover = ref(false);
+
 function submitForm() {
     alert('Gracias por tu consulta. Nos pondremos en contacto pronto.')
 }
@@ -259,6 +261,7 @@ interface Product {
     icon?: string; // Nombre de la clase de icono (ej. 'bi-clipboard-check')
     image?: string; // Ruta de la imagen referencial del servicio
     price?: string; // Precio del servicio
+    discountPrice ?:string;
 }
 
 interface ContactInfo {
@@ -313,14 +316,14 @@ function getContrastTextColor(rgbColor: string): string {
     return luminance > 0.179 ? '#111111' : '#ffffff'
 }
 
-const nameTextStyle = computed(() => ({
-    color: getContrastTextColor(brandData.color || 'rgb(13, 110, 253)'),
-    fontWeight: '600'
-}))
 
 const route = useRoute();
 const brandData = ref<BrandDetail | null>(null);
 const currentYear = ref(new Date().getFullYear());
+const nameTextStyle = computed(() => ({
+    color: getContrastTextColor(brandData.value!.color || 'rgb(13, 110, 253)'),
+    fontWeight: '600'
+}))
 
 const getAssetUrl = (imageFileName: string) => {
 
@@ -340,12 +343,12 @@ const allBrandDetails: BrandDetail[] = [
         slug: 'anticovid',
         heroTitle: 'Desinfección Profunda para Espacios Seguros',
         heroSubtitle: 'Protegiendo tu salud y la de los tuyos con tecnología de vanguardia.',
-        aboutText: 'Anticovid nace para dar una solución a la pandemia iniciada en el año 2020 brindando el servicio de desinfección total, eliminando a todo tipo de virus, bacterias y hongos, incluido el Covid-19, mediante el uso de nuestra tecnología de vanguardia en termonebulización, que a través de la formación de una densa neblina, logra penetrar a lugares inaccesibles dando como resultado una desinfección efectiva. ',
-        mission: 'En AntiCovid, nuestra misión es ofrecer soluciones eficaces y de alta calidad para la desinfección contra el Covid-19 en hogares, empresas y comunidades.  Nos esforzamos por brindar servicios confiables y seguros, utilizando productos químicos biodegradables y las últimas técnicas de limpieza y desinfección, para asegurar la salud y seguridad de nuestros clientes y la comunidad en general. ',
-        vision: 'Nuestra visión en AntiCovid es ser líderes en desinfección contra el Covid-19, proporcionando servicios innovadores y personalizados que satisfagan las necesidades de nuestros clientes.  Nos comprometemos a mantenernos actualizados con los últimos avances tecnológicos y científicos, y a ser responsables con el medio ambiente, utilizando prácticas sostenibles en todo momento.  Además, aspiramos a ser una empresa socialmente responsable, que contribuya al bienestar de la sociedad y fomente un cambio positivo en el mundo. ',
+        aboutText: 'En Anticovid somos una empresa comprometida con la salud y seguridad de nuestros clientes, ofreciendo soluciones efectivas y responsables para la desinfección de edificios y hogares. En un contexto global marcado por la pandemia del SARS-CoV-2, seguimos de cerca las recomendaciones de las principales autoridades sanitarias internacionales, adaptándonos continuamente a los más altos estándares de seguridad y calidad.',
+        mission: 'Brindar soluciones integrales y seguras para la desinfección de espacios, protegiendo la salud de nuestros clientes mediante el uso de productos de alta calidad y tecnologías de vanguardia, adaptándonos siempre a los estándares internacionales.',
+        vision: 'Ser la empresa líder en desinfección en la región, reconocida por nuestra innovación, compromiso con la calidad y el medio ambiente, y por ofrecer soluciones efectivas en la lucha contra el SARS-CoV-2 y otros patógenos.     ',
         products: [
-            { title: 'Desinfección Total', description: 'Eliminación de todo tipo de virus, bacterias y hongos, incluido el Covid-19, mediante termonebulización avanzada. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Tecnología de Vanguardia', description: 'Uso de termonebulización que logra penetrar a lugares inaccesibles para una desinfección efectiva. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Desinfección Total', description: 'Eliminación de todo tipo de virus, bacterias y hongos, incluido el Covid-19, mediante termonebulización avanzada. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Tecnología de Vanguardia', description: 'Uso de termonebulización que logra penetrar a lugares inaccesibles para una desinfección efectiva. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
             // Aquí se agregarían más servicios con sus imágenes y precios si los proporcionas
         ],
         contact: {
@@ -359,6 +362,13 @@ const allBrandDetails: BrandDetail[] = [
         fontText: 'Arial',
         banner: 'https://dummyimage.com/1200x400/000/fff', // Placeholder para el banner de Anticovid,
         logo: 'https://dummyimage.com/500x400/09f/fff',
+        testimonials:[{
+            company:'Dirección General Casa de la Cultura Jurídica',
+            text:''
+        },{
+            company:'Papitos Bacalar: Marina, Cabañas & Restaurant.',
+            text:''
+        }]
     },
     {
         name: 'Pest Control Total',
@@ -369,9 +379,9 @@ const allBrandDetails: BrandDetail[] = [
         mission: 'La misión de Pest Control Total es proporcionar servicios de alta calidad y efectividad, protegiendo hogares, negocios y comunidades de las molestias causadas por plagas y animales ferales.  Nos esforzamos por ofrecer soluciones seguras, eficaces y responsables con el medio ambiente, garantizando la satisfacción y tranquilidad de nuestros clientes. ',
         vision: 'Nuestra visión es convertirnos en líderes en el mercado de fumigación de plagas y control de animales ferales, reconocidos por nuestra calidad, confiabilidad y compromiso con la protección del medio ambiente.  Buscamos ser la empresa de referencia, gracias a nuestro equipo, tecnología y enfoque en la satisfacción del cliente. ',
         products: [
-            { title: 'Control de Plagas Comunes', description: 'Incluye cucarachas, hormigas, arañas, termitas, chinches y roedores. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Control de Animales Ferales', description: 'Manejo de perros, murciélagos, iguanas y serpientes. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Inspección y Evaluación', description: 'Servicios de inspección y evaluación de riesgos de plagas. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Control de Plagas Comunes', description: 'Incluye cucarachas, hormigas, arañas, termitas, chinches y roedores. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Control de Animales Ferales', description: 'Manejo de perros, murciélagos, iguanas y serpientes. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Inspección y Evaluación', description: 'Servicios de inspección y evaluación de riesgos de plagas. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
             // Aquí se agregarían más servicios con sus imágenes y precios si los proporcionas
         ],
         contact: {
@@ -395,9 +405,9 @@ const allBrandDetails: BrandDetail[] = [
         mission: 'La misión de Miss Clean es brindar una solución de limpieza y desinfección integral, rápida y efectiva, con el objetivo de mejorar la calidad de vida de las personas y garantizar la salud y seguridad de los ambientes.  Nos enfocamos en brindar un servicio personalizado y de calidad, con una atención al cliente excepcional y en la satisfacción del cliente. ',
         vision: 'La visión de Miss Clean es convertirse en la empresa líder en limpieza y desinfección de hogares y negocios en Chetumal, ofreciendo servicios innovadores y eficientes que mejoren la calidad de vida de las personas y contribuyan a un entorno más saludable.  Buscamos expandirnos a nuevas ciudades y regiones, ayudando a más personas a mantener sus hogares y negocios limpios y saludables. ',
         products: [
-            { title: 'Limpieza Comercial', description: 'Servicios para sectores industrial, corporativo y comercial. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Limpieza Residencial', description: 'Limpieza profunda y mantenimiento para hogares. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Productos Biodegradables', description: 'Uso de productos de vanguardia que limpian, desinfectan y son biodegradables. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Limpieza Comercial', description: 'Servicios para sectores industrial, corporativo y comercial. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Limpieza Residencial', description: 'Limpieza profunda y mantenimiento para hogares. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Productos Biodegradables', description: 'Uso de productos de vanguardia que limpian, desinfectan y son biodegradables. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
             // Aquí se agregarían más servicios con sus imágenes y precios si los proporcionas
         ],
         contact: {
@@ -416,13 +426,13 @@ const allBrandDetails: BrandDetail[] = [
         slug: 'lavanderia-premium-ecologica',
         heroTitle: 'Cuidado de Ropa Sostenible y de Calidad Superior',
         heroSubtitle: 'Tus prendas impecables con respeto por el planeta.',
-        aboutText: 'Lavandería Premium Ecológica nació en 2016 con la idea de brindar un servicio de alta calidad en limpieza, restauración y desinfección de prendas.  Nuestro personal está altamente capacitado y calificado para un servicio extraordinario con los más altos estándares.  Contamos con más de 500 clientes frecuentes en Chetumal y atendemos a 15 hoteles en Chetumal, Xul-Ha, Bacalar, con servicio de recolección y lavado de hotelería.  Nuestros productos cumplen la norma 093 de la Secretaría de Salud para desinfección, entregando ropa libre de COVID-19. ',
-        mission: 'Brindar un servicio de alta calidad en limpieza, restauración y desinfección de prendas de vestir, garantizando la satisfacción y confianza de nuestros clientes.  Nos enfocamos en utilizar productos y procesos ecológicos y respetuosos con el medio ambiente, y contamos con personal altamente capacitado para un servicio excepcional con los más altos estándares de calidad. ',
-        vision: 'Convertirnos en la lavandería líder del mercado, ofreciendo servicios innovadores y eficientes en limpieza, restauración y desinfección de prendas de vestir.  Buscamos expandirnos a los alrededores de Chetumal, proporcionando un servicio de calidad y ecoamigable a una amplia gama de clientes, y seguir actualizándonos y mejorando para mantenernos a la vanguardia.  Nuestro compromiso con la salud se refleja en el uso de productos y procesos apegados a las normas sanitarias. ',
+        aboutText: 'Lavandería Premium Ecológica fue fundada en 2016 con el propósito de ofrecer un servicio de lavandería exclusivo y de alta calidad, comprometidos con el cuidado y tratamiento adecuado de las prendas. Nuestra misión es garantizar la limpieza, restauración y desinfección impecable de cada prenda, con el respaldo de un equipo altamente capacitado y profesional. Desde su creación, hemos logrado consolidarnos como líderes en la industria de lavandería de alto nivel en la ciudad de Chetumal, y actualmente extendemos nuestros servicios a destinos cercanos como Xul-Ha y Bacalar, atendiendo a más de 500 clientes frecuentes, entre los cuales destacan 15 hoteles, spas, hospitales y centros de belleza.Nos distinguimos por ofrecer un servicio eficiente, rápido y ecológico, cumpliendo con la normatividad sanitaria y garantizando que todas nuestras prendas estén completamente libres de virus y bacterias, asegurando una atención excepcional para cada uno de nuestros clientes.',
+        mission: 'Brindar un servicio de lavandería premium, ecológico y de alta calidad, especializado en la limpieza, desinfección y restauración de prendas, mediante un proceso profesional, rápido y eficiente, que garantice la satisfacción total de nuestros clientes.',
+        vision: 'Ser la lavandería premium de referencia en la región, destacando por nuestro compromiso con la calidad, la ecología y la innovación en el servicio. Buscamos expandir nuestra presencia a nivel nacional, siendo reconocidos por nuestra capacidad de ofrecer soluciones personalizadas, respetuosas con el medio ambiente y eficientes para negocios del sector hotelero y servicios relacionados.',
         products: [
-            { title: 'Lavado y Desinfección de Prendas', description: 'Servicio de alta calidad en limpieza, restauración y desinfección. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Servicio de Hotelería', description: 'Recolección y lavado de prendas para hoteles en Chetumal, Xul-Ha, Bacalar. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Procesos Ecológicos Certificados', description: 'Productos apegados a la norma 093 de la Secretaría de Salud, entregando ropa libre de COVID-19. ', price: 53, image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Lavado y Desinfección de Prendas', description: 'Servicio de alta calidad en limpieza, restauración y desinfección. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Servicio de Hotelería', description: 'Recolección y lavado de prendas para hoteles en Chetumal, Xul-Ha, Bacalar. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
+            { title: 'Procesos Ecológicos Certificados', description: 'Productos apegados a la norma 093 de la Secretaría de Salud, entregando ropa libre de COVID-19. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
             // Aquí se agregarían más servicios con sus imágenes y precios si los proporcionas
         ],
         contact: {

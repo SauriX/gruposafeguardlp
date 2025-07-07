@@ -1,11 +1,11 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
             <div class="container">
                 <router-link class="navbar-brand" to="/">
-                    <img src="https://dummyimage.com/150x40/000/fff" alt="Grupo Safeguard Logo" height="40"
+                    <img src="@/assets/logos/safeguard/Logo 150x40.png" alt="Grupo Safeguard Logo" height="40"
                         class="me-2">
-                    Grupo Safeguard
+
                 </router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
         </nav>
 
         <header class="text-white text-center py-5 hero-section"
-            :style="{ backgroundImage: 'url(' + getAssetUrl('https://dummyimage.com/1920x600/000/fff') + ')', backgroundColor: primaryColor, backgroundSize: 'cover', backgroundPosition: 'center' }">
+            :style="{ backgroundImage: 'url(' + heroBanner + ')', backgroundColor: primaryColor, backgroundSize: 'cover', backgroundPosition: 'center' }">
             <div class="container">
                 <h1 class="display-4 mb-3" :style="{ fontFamily: 'Myriad Pro Bold, sans-serif' }">Grupo Safeguard:
                     Soluciones Integrales para Tu Bienestar y Entorno</h1>
@@ -55,7 +55,7 @@
                 <div class="row align-items-center gy-4">
                     <!-- Imagen -->
                     <div class="col-lg-6 text-center">
-                        <img src="https://dummyimage.com/500x400.png/09f/fff" class="img-fluid rounded shadow-sm"
+                        <img src="@/assets/banners/safeguard/500X400.png" class="img-fluid rounded shadow-sm"
                             alt="Grupo Safeguard Team">
                     </div>
 
@@ -66,14 +66,17 @@
                         </h2>
                         <p class="lead mb-4"
                             :style="{ fontFamily: 'Myriad Pro Regular, sans-serif', fontSize: '1.125rem', lineHeight: '1.6' }">
-                            En Grupo Safeguard nos dedicamos a brindar servicios de limpieza, desinfección y fumigación
-                            de alta calidad,
-                            con un compromiso firme hacia el cuidado del medio ambiente y el desarrollo de nuestros
-                            colaboradores.<br /><br />
-                            Fundados en 2020, hemos crecido integrando divisiones especializadas que ofrecen soluciones
-                            integrales para hogares y empresas.
+                            <strong><em><span style="color:#171717;">Grupo Safeguard</span></em></strong><em><span
+                                    style="color:#171717;"> es una empresa consolidada que agrupa diversas unidades de
+                                    negocio con un enfoque com&uacute;n: brindar servicios de la m&aacute;s alta calidad
+                                    en la ciudad de Chetumal y sus alrededores, as&iacute; como en toda la regi&oacute;n
+                                    de Quintana Roo. </span></em>
+                            <em><span style="color:#171717;">Nuestra cartera de empresas incluye <strong>Anticovid, Pest
+                                        Control, Lavander&iacute;a Premium, Miss Clean y Jardiner&iacute;a
+                                        Gubernamental</strong>, todas ellas orientadas a satisfacer las necesidades
+                                    espec&iacute;ficas de nuestros clientes, manteniendo un compromiso constante con la
+                                    excelencia, la innovaci&oacute;n y el respeto por el medio ambiente.</span></em>
                         </p>
-
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <div class="card h-100 shadow-sm border-0 p-3">
@@ -84,10 +87,11 @@
                                     </div>
                                     <p class="card-text"
                                         :style="{ fontFamily: 'Myriad Pro Regular, sans-serif', fontSize: '1rem', lineHeight: '1.5' }">
-                                        Proporcionar servicios eficientes y de alta calidad que aseguren ambientes
-                                        saludables y seguros,
-                                        siendo líderes en innovación y responsables con el planeta, apoyando el
-                                        crecimiento de nuestro equipo.
+                                        Proporcionar soluciones integrales de servicios, que aborden de manera eficiente
+                                        las necesidades de nuestros clientes, garantizando su bienestar y satisfacción.
+                                        Nos comprometemos a ofrecer un trabajo de calidad superior, adaptado a las
+                                        demandas de cada sector, utilizando tecnología avanzada y promoviendo prácticas
+                                        responsables en todos nuestros procesos.
                                     </p>
                                 </div>
                             </div>
@@ -101,10 +105,11 @@
                                     </div>
                                     <p class="card-text"
                                         :style="{ fontFamily: 'Myriad Pro Regular, sans-serif', fontSize: '1rem', lineHeight: '1.5' }">
-                                        Ser el referente líder en México en servicios esenciales para hogares y
-                                        empresas,
-                                        reconocidos por nuestra excelencia, impacto social y adaptación constante al
-                                        mercado.
+                                        Ser el grupo empresarial líder en Quintana Roo, reconocido por su capacidad de
+                                        innovación, su enfoque en el servicio al cliente y su contribución al desarrollo
+                                        sostenible de la comunidad. Aspiramos a expandir nuestras operaciones y
+                                        fortalecer nuestra presencia en el mercado, creando un entorno de trabajo que
+                                        fomente el crecimiento personal y profesional de nuestro equipo.
                                     </p>
                                 </div>
                             </div>
@@ -124,7 +129,7 @@
                 <h2 class="text-center mb-4" :style="{ fontFamily: 'Myriad Pro Bold, sans-serif' }">
                     Contáctanos
                 </h2>
-                <p  :style="{ fontFamily: 'Myriad Pro Regular, sans-serif' }" class="text-center mb-4">
+                <p :style="{ fontFamily: 'Myriad Pro Regular, sans-serif' }" class="text-center mb-4">
                     ¿Tienes alguna pregunta o necesitas una cotización? Estamos aquí para ayudarte.
                 </p>
                 <div class="row justify-content-center align-items-start">
@@ -191,7 +196,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import BrandCard from '@/components/BrandCard.vue';
-
+import heroBanner from '@/assets/banners/safeguard/1920X600.png';
 interface Brand {
     name: string;
     slug: string;
@@ -209,59 +214,80 @@ const brands: Brand[] = [
         name: 'Anticovid',
         slug: 'anticovid',
         description: 'Soluciones profesionales de desinfección y sanitización.',
-        logo: 'https://dummyimage.com/600x400/007bff/ffffff',
+        logo: require('@/assets/productos/safeguard/anticovid.png'),
         color: 'rgb(167, 44, 39)', // Rojo de Anticovid
     },
     {
         name: 'Pest Control Total',
         slug: 'pest-control-total',
         description: 'Control de plagas integral y amigable con el ambiente.',
-        logo: 'https://dummyimage.com/600x400/007bff/ffffff',
+        logo: require('@/assets/productos/safeguard/pest.png'),
         color: 'rgb(196, 224, 62)', // Verde lima de Pest Control Total
     },
     {
         name: 'Miss Clean',
         slug: 'miss-clean',
         description: 'Servicios de limpieza profunda para hogares y oficinas.',
-        logo: 'https://dummyimage.com/600x400/007bff/ffffff',
+        logo: require('@/assets/productos/safeguard/mssclean.png'),
         color: 'rgb(165, 189, 119)', // Verde claro de Miss Clean
     },
     {
         name: 'Lavandería Premium Ecológica',
         slug: 'lavanderia-premium-ecologica',
         description: 'Lavado de ropa y textiles con procesos ecológicos.',
-        logo: 'https://dummyimage.com/600x400/007bff/ffffff',
+        logo: require('@/assets/productos/safeguard/lavanderia.png'),
         color: 'rgb(16, 84, 128)', // Azul oscuro de Lavandería Premium Ecológica
+    },
+    {
+        name: 'Castelvania',
+        slug: 'Castelvania',
+        description: 'Eventos Tienda y Camping.',
+        logo: require('@/assets/productos/safeguard/castelvania.png'),
+        color: '#CB9B48', // Azul oscuro de Lavandería Premium Ecológica
+    },
+    {
+        name: 'ExtinFire',
+        slug: 'ExtinFire',
+        description: 'Mantenimiento y venta de extintores.',
+        logo: require('@/assets/productos/safeguard/extinfire.png'),
+        color: '#CE1D43', // Azul oscuro de Lavandería Premium Ecológica
+    },
+    {
+        name: 'Jardineria Gubernamental',
+        slug: 'Jardineria Gubernamental',
+        description: '',
+        logo: require('@/assets/productos/safeguard/jardineria.png'),
+        color: '#80B51F', // Azul oscuro de Lavandería Premium Ecológica
+    },
+    {
+        name: 'Ric-H2O',
+        slug: 'Ric-H2O',
+        description: '!Vive bien,bebe rico¡',
+        logo: require('@/assets/productos/safeguard/rich2o.png'),
+        color: '#00ACC7', // Azul oscuro de Lavandería Premium Ecológica
     },
 ];
 
-const getAssetUrl = (imageFileName: string) => {
-    // Si la cadena ya es una URL (ej. empieza con 'https://'), la devuelve directamente
-    if (imageFileName.startsWith('https://')) {
-        return imageFileName;
-    }
-    // De lo contrario, asume que es un activo local y construye la URL
-    return new URL(`../assets/images/${imageFileName}`, import.meta.url).href;
-};
+
 </script>
 
 <style scoped>
 /* Estilos globales para la fuente principal */
-@font-face {
+/*@font-face {
     font-family: 'Myriad Pro Bold';
-    /*     src: url('@/assets/fonts/MyriadPro-Bold.woff2') format('woff2'),
-        url('@/assets/fonts/MyriadPro-Bold.woff') format('woff'); */
+    src: url('@/assets/fonts/MyriadPro-Bold.woff2') format('woff2'),
+        url('@/assets/fonts/MyriadPro-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Myriad Pro Regular';
-    /*     src: url('@/assets/fonts/MyriadPro-Regular.woff2') format('woff2'),
-        url('@/assets/fonts/MyriadPro-Regular.woff') format('woff'); */
+    src: url('@/assets/fonts/MyriadPro-Regular.woff2') format('woff2'),
+        url('@/assets/fonts/MyriadPro-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
+}*/
 
 .bg-primary {
     background-color: rgb(204, 12, 42) !important;

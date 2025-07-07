@@ -40,13 +40,14 @@
 import { defineProps } from "vue";
 
 const props = defineProps<{
-    product: {
-        title: string;
-        description: string;
-        image?: string;
-        price?: number;
-        discountPrice?: number;
-    };
+product: {
+    title: string;
+    description: string;
+    icon?: string; // Nombre de la clase de icono (ej. 'bi-clipboard-check')
+    image?: string; // Ruta de la imagen referencial del servicio
+    price?: string; // Precio del servicio
+    discountPrice? :string;
+}
     fontPrincipal: string;
     fontText: string;
     getAssetUrl: (path: string) => string;

@@ -1,9 +1,9 @@
 <template>
     <div class="card h-100 shadow-sm">
         <div class="card-header image-header" :style="{ backgroundColor: cardColor || '#f8f9fa' }">
-            <img :src="getAssetUrl(brand.logo)" :alt="brand.name + ' Logo'" class="brand-logo" />
+            <img :src="brand.logo!" :alt="brand.name + ' Logo'" class="brand-logo" />
         </div>
-        <div class="card-body d-flex flex-column">
+        <div class="card-body d-flex flex-column text-center">
             <h5 class="card-title text-center">{{ brand.name }}</h5>
             <p class="card-text flex-grow-1">{{ brand.description }}</p>
             <router-link :to="'/' + brand.slug" class="btn btn-outline-primary mt-auto"
@@ -21,7 +21,8 @@ interface Brand {
     name: string;
     slug: string;
     description: string;
-    logo: string;
+    logo?: string;
+    color?: string; // Nuevo prop para el color de la tarjeta
 }
 
 const props = defineProps<{
