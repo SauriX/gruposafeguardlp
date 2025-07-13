@@ -22,39 +22,37 @@ interface Brand {
     slug: string;
     description: string;
     logo?: string;
-    color?: string; // Nuevo prop para el color de la tarjeta
+    color?: string;
 }
 
 const props = defineProps<{
     brand: Brand;
-    cardColor?: string; // Define el nuevo prop para el color
+    cardColor?: string;
 }>();
 
 const getAssetUrl = (imageFileName: string) => {
-    // Si la cadena ya es una URL (ej. empieza con 'https://'), la devuelve directamente
     if (imageFileName.startsWith('https://')) {
         return imageFileName;
     }
-    // De lo contrario, asume que es un activo local y construye la URL
     return new URL(`../assets/images/${imageFileName}`, import.meta.url).href;
 };
 </script>
 
 <style scoped>
 .card-header.image-header {
-    height: 140px;
+    height: 200px; /* Ajusta según tu diseño */
     padding: 0;
-    position: relative;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
 }
 
 .brand-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Usa 'contain' si no quieres recortes */
-    position: absolute;
-    top: 0;
-    left: 0;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
 }
 </style>

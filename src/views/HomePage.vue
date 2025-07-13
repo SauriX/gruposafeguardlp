@@ -116,7 +116,9 @@
                         </div>
 
                         <div class="mt-4">
-                            <button class="btn btn-primary btn-lg">Conoce Más</button>
+                            <router-link :to="'/safeguad/about'" class="btn btn-primary btn-lg">
+                                Conoce Más
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -211,11 +213,11 @@ const primaryColor = 'rgb(204, 12, 42)'; // Rojo principal de Safeguard
 
 const brands: Brand[] = [
     {
-        name: 'Anticovid',
-        slug: 'anticovid',
-        description: 'Soluciones profesionales de desinfección y sanitización.',
-        logo: require('@/assets/productos/safeguard/anticovid.png'),
-        color: 'rgb(167, 44, 39)', // Rojo de Anticovid
+        name: 'Lavandería Premium Ecológica',
+        slug: 'lavanderia-premium-ecologica',
+        description: 'Lavado de ropa y textiles con procesos ecológicos.',
+        logo: require('@/assets/productos/safeguard/lavanderia.png'),
+        color: 'rgb(16, 84, 128)', // Azul oscuro de Lavandería Premium Ecológica
     },
     {
         name: 'Pest Control Total',
@@ -232,12 +234,22 @@ const brands: Brand[] = [
         color: 'rgb(165, 189, 119)', // Verde claro de Miss Clean
     },
     {
-        name: 'Lavandería Premium Ecológica',
-        slug: 'lavanderia-premium-ecologica',
-        description: 'Lavado de ropa y textiles con procesos ecológicos.',
-        logo: require('@/assets/productos/safeguard/lavanderia.png'),
-        color: 'rgb(16, 84, 128)', // Azul oscuro de Lavandería Premium Ecológica
+        name: 'Jardineria Gubernamental',
+        slug: 'Jardineria-Gubernamental',
+        description: '',
+        logo: require('@/assets/productos/safeguard/jardineria.png'),
+        color: '#80B51F', // Azul oscuro de Lavandería Premium Ecológica
     },
+    {
+        name: 'Anticovid',
+        slug: 'anticovid',
+        description: 'Soluciones profesionales de desinfección y sanitización.',
+        logo: require('@/assets/productos/safeguard/anticovid.png'),
+        color: 'rgb(167, 44, 39)', // Rojo de Anticovid
+    },
+
+
+
     {
         name: 'Castelvania',
         slug: 'Castelvania',
@@ -252,13 +264,7 @@ const brands: Brand[] = [
         logo: require('@/assets/productos/safeguard/extinfire.png'),
         color: '#CE1D43', // Azul oscuro de Lavandería Premium Ecológica
     },
-    {
-        name: 'Jardineria Gubernamental',
-        slug: 'Jardineria Gubernamental',
-        description: '',
-        logo: require('@/assets/productos/safeguard/jardineria.png'),
-        color: '#80B51F', // Azul oscuro de Lavandería Premium Ecológica
-    },
+
     {
         name: 'Ric-H2O',
         slug: 'Ric-H2O',

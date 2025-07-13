@@ -1,11 +1,11 @@
 <template>
+    
     <div v-if="brandData">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
             <div class="container">
                 <router-link class="navbar-brand" to="/">
                     <img src="@/assets/logos/safeguard/Logo 150x40.png" alt="Grupo Safeguard Logo" height="40"
                         class="me-2">
-
                 </router-link>
                 <span class="navbar-text ms-3 me-auto">/ {{ brandData.name }}</span>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -28,17 +28,22 @@
                 </div>
             </div>
         </nav>
+        <header class="hero-section w-100" :style="{
+            backgroundImage: 'url(' + getAssetUrl(brandData.banner) + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            height: '540px'
+        }">
 
-        <header class="text-white text-center py-5 hero-section"
-            :style="{ backgroundImage: 'url(' + getAssetUrl(brandData.banner) + ')', backgroundColor: brandData.color || '#0d6efd', backgroundSize: 'cover', backgroundPosition: 'center' }">
-            <div class="container">
-                <h1 class="display-4 mb-3" :style="{ fontFamily: brandData.fontPrincipal + ', sans-serif' }">{{
-                    brandData.heroTitle }}</h1>
-                <p class="lead mb-4" :style="{ fontFamily: brandData.fontText + ', sans-serif' }">{{
-                    brandData.heroSubtitle }}</p>
-                <a href="#contacto" class="btn btn-light btn-lg">Solicita una Cotización</a>
+            <div class="container text-white text-center py-5">
+                <!-- Texto opcional (puedes quitarlo si no lo necesitas) -->
             </div>
         </header>
+
+
+
+
         <section id="servicios" class="py-5">
             <div class="container">
                 <h2 class="text-center mb-5" :style="{ fontFamily: brandData.fontPrincipal + ', sans-serif' }">
@@ -48,7 +53,8 @@
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                     <div class="col px-1" v-for="product in brandData.products" :key="product.title">
                         <ProductCard :product="product" :fontPrincipal="brandData.fontPrincipal"
-                            :fontText="brandData.fontText" :getAssetUrl="getAssetUrl" />
+                            :fontText="brandData.fontText" :getAssetUrl="getAssetUrl"
+                            :whatsapp-number="brandData.numero" />
                     </div>
                 </div>
 
@@ -122,9 +128,9 @@
                 </div>
             </div>
         </section>
-
-
-
+        <section v-if="brandData.slug==='lavanderia-premium-ecologica'">
+            <Sucursales></Sucursales>
+        </section>
         <section id="contacto" class="py-5" :style="{
             backgroundColor: brandData.color || '#0d6efd',
             color: 'white',
@@ -248,6 +254,7 @@ import { ref, watch, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import ProductCard from '@/components/ProductCard.vue';
 import TestimonialCard from '@/components/TestimonialCard.vue'
+import Sucursales from '@/components/Sucursales.vue';
 // Para usar Bootstrap Icons, asegúrate de haberlo incluido en public/index.html:
 // <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 const hover = ref(false);
@@ -257,11 +264,12 @@ function submitForm() {
 }
 interface Product {
     title: string;
+    subTitle: string;
     description: string;
     icon?: string; // Nombre de la clase de icono (ej. 'bi-clipboard-check')
     image?: string; // Ruta de la imagen referencial del servicio
     price?: string; // Precio del servicio
-    discountPrice ?:string;
+    discountPrice?: string;
 }
 
 interface ContactInfo {
@@ -296,6 +304,7 @@ interface BrandDetail {
     banner: string; // Ruta al banner individual de la marca
     testimonials?: Testimonial[]; // Clientes que han contratado los servicios
     logo: string;
+    numero: string;
 }
 function getContrastTextColor(rgbColor: string): string {
     // Convertir rgb(a) a componentes
@@ -326,14 +335,19 @@ const nameTextStyle = computed(() => ({
 }))
 
 const getAssetUrl = (imageFileName: string) => {
+    if (!imageFileName) return ''; // en caso de null
 
-    // Si la cadena ya es una URL (ej. empieza con 'https://'), la devuelve directamente
-    if (imageFileName.startsWith('https://')) {
-
+    // Si ya es una URL remota, úsala tal cual
+    if (imageFileName.startsWith('http') || imageFileName.startsWith('//')) {
         return imageFileName;
     }
 
-    // De lo contrario, asume que es un activo local y construye la URL
+    // Si ya empieza con '/img/' o '/assets/', solo retorna como está (servida desde /public)
+    if (imageFileName.startsWith('/img/') || imageFileName.startsWith('/assets/')) {
+        return imageFileName;
+    }
+
+    // Sino, es una imagen local desde la carpeta de assets importadas en Vite
     return new URL(`../assets/images/${imageFileName}`, import.meta.url).href;
 };
 // Datos reales de las marcas hijas extraídos del PDF
@@ -347,9 +361,9 @@ const allBrandDetails: BrandDetail[] = [
         mission: 'Brindar soluciones integrales y seguras para la desinfección de espacios, protegiendo la salud de nuestros clientes mediante el uso de productos de alta calidad y tecnologías de vanguardia, adaptándonos siempre a los estándares internacionales.',
         vision: 'Ser la empresa líder en desinfección en la región, reconocida por nuestra innovación, compromiso con la calidad y el medio ambiente, y por ofrecer soluciones efectivas en la lucha contra el SARS-CoV-2 y otros patógenos.     ',
         products: [
-            { title: 'Desinfección Total', description: 'Eliminación de todo tipo de virus, bacterias y hongos, incluido el Covid-19, mediante termonebulización avanzada. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Tecnología de Vanguardia', description: 'Uso de termonebulización que logra penetrar a lugares inaccesibles para una desinfección efectiva. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            // Aquí se agregarían más servicios con sus imágenes y precios si los proporcionas
+            { title: 'Desinfección Hogar', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-21.png', import.meta.url).href },
+            { title: 'Desinfección Hoteles', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-23.png', import.meta.url).href },
+            { title: 'Desinfección Negocios', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-22.png', import.meta.url).href },
         ],
         contact: {
             email: 'Gruposafeguard@gmail.com',
@@ -360,15 +374,17 @@ const allBrandDetails: BrandDetail[] = [
         color: 'rgb(167, 44, 39)', // Rojo principal de Anticovid 
         fontPrincipal: 'Arial Bold',
         fontText: 'Arial',
-        banner: 'https://dummyimage.com/1200x400/000/fff', // Placeholder para el banner de Anticovid,
+        banner: new URL('../assets/banners/anticovid/banners-56.png', import.meta.url).href, // Placeholder para el banner de Anticovid,
         logo: 'https://dummyimage.com/500x400/09f/fff',
-        testimonials:[{
-            company:'Dirección General Casa de la Cultura Jurídica',
-            text:''
-        },{
-            company:'Papitos Bacalar: Marina, Cabañas & Restaurant.',
-            text:''
-        }]
+        testimonials: [{
+            company: 'Dirección General Casa de la Cultura Jurídica',
+            text: ''
+        }, {
+            company: 'Papitos Bacalar: Marina, Cabañas & Restaurant.',
+            text: ''
+        }],
+
+        numero: '9834540025'
     },
     {
         name: 'Pest Control Total',
@@ -379,10 +395,18 @@ const allBrandDetails: BrandDetail[] = [
         mission: 'La misión de Pest Control Total es proporcionar servicios de alta calidad y efectividad, protegiendo hogares, negocios y comunidades de las molestias causadas por plagas y animales ferales.  Nos esforzamos por ofrecer soluciones seguras, eficaces y responsables con el medio ambiente, garantizando la satisfacción y tranquilidad de nuestros clientes. ',
         vision: 'Nuestra visión es convertirnos en líderes en el mercado de fumigación de plagas y control de animales ferales, reconocidos por nuestra calidad, confiabilidad y compromiso con la protección del medio ambiente.  Buscamos ser la empresa de referencia, gracias a nuestro equipo, tecnología y enfoque en la satisfacción del cliente. ',
         products: [
-            { title: 'Control de Plagas Comunes', description: 'Incluye cucarachas, hormigas, arañas, termitas, chinches y roedores. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Control de Animales Ferales', description: 'Manejo de perros, murciélagos, iguanas y serpientes. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Inspección y Evaluación', description: 'Servicios de inspección y evaluación de riesgos de plagas. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            // Aquí se agregarían más servicios con sus imágenes y precios si los proporcionas
+            { title: 'Fumigación Contra Insectos Rastreros', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-11.png', import.meta.url).href },
+            { title: 'Fumigación Contra Hormigas', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-09.png', import.meta.url).href },
+            { title: 'Fumigación Contra Pulgas y garrapatas', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-10.png', import.meta.url).href },
+            { title: 'Control Contra Animales Ferales', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-12.png', import.meta.url).href },
+            { title: 'Control Contra Roedores', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-13.png', import.meta.url).href },
+            { title: 'Control Contra Murcielagos', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-14.png', import.meta.url).href },
+            { title: 'Fumigación Contra Chinches', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-15.png', import.meta.url).href },
+            { title: 'Fumigación Contra Cucarachas', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-16.png', import.meta.url).href },
+            { title: 'Fumigación Contra Termitas', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-17.png', import.meta.url).href },
+            { title: 'Termonebulazación Insectos Voladores', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-18.png', import.meta.url).href },
+            { title: 'Fumigación Contra Alacranes', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-19.png', import.meta.url).href },
+            { title: 'Control Contra Abejas', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/pest/iconos-20.png', import.meta.url).href },
         ],
         contact: {
             email: 'Pestcontrolcaribe@gmail.com',
@@ -390,11 +414,12 @@ const allBrandDetails: BrandDetail[] = [
             address: 'And 11 #56, Col. Infonavit Fidel Velazquez, Chetumal Quintana Roo, México.',
             facebook: 'https://www.facebook.com/PestControlTotal' // Enlace de ejemplo, el documento solo da el nombre 
         },
-        color: 'rgb(196, 224, 62)', // Verde lima principal de Pest Control 
+        color: 'rgb(0, 61, 26)', // Verde lima principal de Pest Control 
         fontPrincipal: 'FONTSPRING DEMO', // Intervogue Alt Bold Regular 
         fontText: 'FONTSPRING DEMO', // Intervogue Alt Bold Regular 
-        banner: 'https://dummyimage.com/1200x400/000/fff', // Placeholder para el banner de Anticovid,
+        banner: new URL('../assets/banners/pest/banners-57.png', import.meta.url).href, // Placeholder para el banner de Anticovid,
         logo: 'https://dummyimage.com/500x400/09f/fff',
+        numero: '9834540025'
     },
     {
         name: 'Miss Clean',
@@ -405,21 +430,21 @@ const allBrandDetails: BrandDetail[] = [
         mission: 'La misión de Miss Clean es brindar una solución de limpieza y desinfección integral, rápida y efectiva, con el objetivo de mejorar la calidad de vida de las personas y garantizar la salud y seguridad de los ambientes.  Nos enfocamos en brindar un servicio personalizado y de calidad, con una atención al cliente excepcional y en la satisfacción del cliente. ',
         vision: 'La visión de Miss Clean es convertirse en la empresa líder en limpieza y desinfección de hogares y negocios en Chetumal, ofreciendo servicios innovadores y eficientes que mejoren la calidad de vida de las personas y contribuyan a un entorno más saludable.  Buscamos expandirnos a nuevas ciudades y regiones, ayudando a más personas a mantener sus hogares y negocios limpios y saludables. ',
         products: [
-            { title: 'Limpieza Comercial', description: 'Servicios para sectores industrial, corporativo y comercial. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Limpieza Residencial', description: 'Limpieza profunda y mantenimiento para hogares. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Productos Biodegradables', description: 'Uso de productos de vanguardia que limpian, desinfectan y son biodegradables. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            // Aquí se agregarían más servicios con sus imágenes y precios si los proporcionas
+            { title: 'Limpieza Hogar', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/msclean/iconos-24.png', import.meta.url).href },
+            { title: 'Limpieza Negocios', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/msclean/iconos-25.png', import.meta.url).href },
+            { title: 'Limpieza Oficinas', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/msclean/iconos-26.png', import.meta.url).href },
         ],
         contact: {
             phone: '983130910',
             address: 'Chetumal Quintana Roo, México.',
             // Correo y redes sociales no especificados en el documento
         },
-        color: 'rgb(165, 189, 119)', // Verde claro principal de Miss Clean 
+        color: 'rgb(221, 120, 144)', // Verde claro principal de Miss Clean 
         fontPrincipal: 'Poppins Medium',
         fontText: 'Poppins Regular',
-        banner: 'https://dummyimage.com/1200x400/000/fff', // Placeholder para el banner de Anticovid,
+        banner: new URL('../assets/banners/msclean/banners-54.png', import.meta.url).href, // Placeholder para el banner de Anticovid,
         logo: 'https://dummyimage.com/500x400/09f/fff',
+        numero: '9831208570'
     },
     {
         name: 'Lavandería Premium Ecológica',
@@ -430,10 +455,27 @@ const allBrandDetails: BrandDetail[] = [
         mission: 'Brindar un servicio de lavandería premium, ecológico y de alta calidad, especializado en la limpieza, desinfección y restauración de prendas, mediante un proceso profesional, rápido y eficiente, que garantice la satisfacción total de nuestros clientes.',
         vision: 'Ser la lavandería premium de referencia en la región, destacando por nuestro compromiso con la calidad, la ecología y la innovación en el servicio. Buscamos expandir nuestra presencia a nivel nacional, siendo reconocidos por nuestra capacidad de ofrecer soluciones personalizadas, respetuosas con el medio ambiente y eficientes para negocios del sector hotelero y servicios relacionados.',
         products: [
-            { title: 'Lavado y Desinfección de Prendas', description: 'Servicio de alta calidad en limpieza, restauración y desinfección. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Servicio de Hotelería', description: 'Recolección y lavado de prendas para hoteles en Chetumal, Xul-Ha, Bacalar. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            { title: 'Procesos Ecológicos Certificados', description: 'Productos apegados a la norma 093 de la Secretaría de Salud, entregando ropa libre de COVID-19. ', price: '53', image: 'https://dummyimage.com/400x300/666/fff' },
-            // Aquí se agregarían más servicios con sus imágenes y precios si los proporcionas
+            { title: 'lavado,Secado y Doblado', subTitle: '', description: '', price: '1', image: new URL('../assets/productos/lavanderia/iconos-33.png', import.meta.url).href },
+            { title: 'Secado y Doblado', subTitle: '', description: '', price: '2', image: new URL('../assets/productos/lavanderia/iconos-34.png', import.meta.url).href },
+            { title: 'Lavado profundo', subTitle: '', description: '', price: '3', image: new URL('../assets/productos/lavanderia/iconos-35.png', import.meta.url).href },
+            { title: 'Tintoreria Lavdo En Seco', subTitle: '', description: '', price: '4', image: new URL('../assets/productos/lavanderia/iconos-36.png', import.meta.url).href },
+            { title: 'Lavado prendas Delicadas', subTitle: '', description: '', price: '5', image: new URL('../assets/productos/lavanderia/iconos-37.png', import.meta.url).href },
+            { title: 'Lavado Vestido De Novia', subTitle: '', description: '', price: '6', image: new URL('../assets/productos/lavanderia/iconos-38.png', import.meta.url).href },
+            { title: 'Lavado Vestido De XV', subTitle: '', description: '', price: '7', image: new URL('../assets/productos/lavanderia/iconos-39.png', import.meta.url).href },
+            { title: 'Planchado Por Pieza', subTitle: '', description: '', price: '8', image: new URL('../assets/productos/lavanderia/iconos-40.png', import.meta.url).href },
+            { title: 'Planchado Por Docena', subTitle: '', description: '', price: '9', image: new URL('../assets/productos/lavanderia/iconos-41.png', import.meta.url).href },
+            { title: 'Lavado De Almohadas', subTitle: '', description: '', price: '10', image: new URL('../assets/productos/lavanderia/iconos-42.png', import.meta.url).href },
+            { title: 'Lavado De Frazadas', subTitle: '', description: '', price: '11', image: new URL('../assets/productos/lavanderia/iconos-43.png', import.meta.url).href },
+            { title: 'Lavado De Edrecolcha', subTitle: '', description: '', price: '12', image: new URL('../assets/productos/lavanderia/iconos-44.png', import.meta.url).href },
+            { title: 'Lavado De Edredones', subTitle: '', description: '', price: '13', image: new URL('../assets/productos/lavanderia/iconos-45.png', import.meta.url).href },
+            { title: 'Lavado De Sognare', subTitle: '', description: '', price: '14', image: new URL('../assets/productos/lavanderia/iconos-46.png', import.meta.url).href },
+            { title: 'Lavado De Hamacas.', subTitle: '', description: '', price: '15', image: new URL('../assets/productos/lavanderia/iconos-47.png', import.meta.url).href },
+            { title: 'Lavado De Tenis', subTitle: '', description: '', price: '16', image: new URL('../assets/productos/lavanderia/iconos-48.png', import.meta.url).href },
+            { title: 'Lavado De Peluches', subTitle: '', description: '', price: '17', image: new URL('../assets/productos/lavanderia/iconos-49.png', import.meta.url).href },
+            { title: 'Lavado De Mochilas', subTitle: '', description: '', price: '18', image: new URL('../assets/productos/lavanderia/iconos-50.png', import.meta.url).href },
+            { title: 'Servicio Express', subTitle: '', description: '', price: '19', image: new URL('../assets/productos/lavanderia/iconos-52.png', import.meta.url).href },
+            { title: 'Lavado De Maletas', subTitle: '', description: '', price: '20', image: new URL('../assets/productos/lavanderia/iconos-53.png', import.meta.url).href },
+
         ],
         contact: {
             email: 'lavanderia.premium@hotmail.com',
@@ -447,8 +489,125 @@ const allBrandDetails: BrandDetail[] = [
         color: 'rgb(16, 84, 128)', // Azul principal de Lavandería Premium 
         fontPrincipal: 'ARTERIONONCOMMERCIAL REGULAR',
         fontText: 'Comfortaa Regular', // O 'Poppins Regular' 
-        banner: 'https://dummyimage.com/1200x400/000/fff', // Placeholder para el banner de Anticovid,
+        banner: new URL('../assets/banners/lavanderia/banners-55.png', import.meta.url).href, // Placeholder para el banner de Anticovid,
+        logo: new URL('../assets/logos/lavanderia/1.png', import.meta.url).href,
+        numero: '9831338111'
+    },
+    {
+        name: 'Castelvania',
+        slug: 'Castelvania',
+        heroTitle: 'Cuidado de Ropa Sostenible y de Calidad Superior',
+        heroSubtitle: 'Tus prendas impecables con respeto por el planeta.',
+        aboutText: 'Lavandería Premium Ecológica fue fundada en 2016 con el propósito de ofrecer un servicio de lavandería exclusivo y de alta calidad, comprometidos con el cuidado y tratamiento adecuado de las prendas. Nuestra misión es garantizar la limpieza, restauración y desinfección impecable de cada prenda, con el respaldo de un equipo altamente capacitado y profesional. Desde su creación, hemos logrado consolidarnos como líderes en la industria de lavandería de alto nivel en la ciudad de Chetumal, y actualmente extendemos nuestros servicios a destinos cercanos como Xul-Ha y Bacalar, atendiendo a más de 500 clientes frecuentes, entre los cuales destacan 15 hoteles, spas, hospitales y centros de belleza.Nos distinguimos por ofrecer un servicio eficiente, rápido y ecológico, cumpliendo con la normatividad sanitaria y garantizando que todas nuestras prendas estén completamente libres de virus y bacterias, asegurando una atención excepcional para cada uno de nuestros clientes.',
+        mission: 'Brindar un servicio de lavandería premium, ecológico y de alta calidad, especializado en la limpieza, desinfección y restauración de prendas, mediante un proceso profesional, rápido y eficiente, que garantice la satisfacción total de nuestros clientes.',
+        vision: 'Ser la lavandería premium de referencia en la región, destacando por nuestro compromiso con la calidad, la ecología y la innovación en el servicio. Buscamos expandir nuestra presencia a nivel nacional, siendo reconocidos por nuestra capacidad de ofrecer soluciones personalizadas, respetuosas con el medio ambiente y eficientes para negocios del sector hotelero y servicios relacionados.',
+        products: [
+            { title: 'Contratación Eventos', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/castlevania/iconos-29.png', import.meta.url).href },
+            { title: 'Contratación Camping', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/castlevania/iconos-30.png', import.meta.url).href },
+            { title: 'Contratación Piscinada', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/castlevania/iconos-31.png', import.meta.url).href },
+            { title: 'Contratación oficinas', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/castlevania/iconos-32.png', import.meta.url).href },
+        ],
+        contact: {
+            email: 'lavanderia.premium@hotmail.com',
+            phone: '983 133 81 11',
+            address: 'Av. Erick Paolo entre Av. Magisterio y Miguel Alemán',
+            phone2: '983 139 22 89',
+            address2: 'Av. Luis Manuel Sevilla entre Guyana y Paraguay',
+            facebook: 'https://www.facebook.com/LavanderiaPremium', // Enlace de ejemplo, el documento solo da el nombre 
+            website: 'https://lavanderiapremium.wixsite.com/lavanderiapemiumche',
+        },
+        color: 'rgb(203, 155, 73)', // Azul principal de Lavandería Premium 
+        fontPrincipal: 'ARTERIONONCOMMERCIAL REGULAR',
+        fontText: 'Comfortaa Regular', // O 'Poppins Regular' 
+        banner: new URL('../assets/banners/castlevania/banners-60.png', import.meta.url).href, // Placeholder para el banner de Anticovid,
         logo: 'https://dummyimage.com/500x400/09f/fff',
+        numero: '983 1350910'
+    },
+    {
+        name: 'ExtinFire',
+        slug: 'ExtinFire',
+        heroTitle: 'Cuidado de Ropa Sostenible y de Calidad Superior',
+        heroSubtitle: 'Tus prendas impecables con respeto por el planeta.',
+        aboutText: 'Lavandería Premium Ecológica fue fundada en 2016 con el propósito de ofrecer un servicio de lavandería exclusivo y de alta calidad, comprometidos con el cuidado y tratamiento adecuado de las prendas. Nuestra misión es garantizar la limpieza, restauración y desinfección impecable de cada prenda, con el respaldo de un equipo altamente capacitado y profesional. Desde su creación, hemos logrado consolidarnos como líderes en la industria de lavandería de alto nivel en la ciudad de Chetumal, y actualmente extendemos nuestros servicios a destinos cercanos como Xul-Ha y Bacalar, atendiendo a más de 500 clientes frecuentes, entre los cuales destacan 15 hoteles, spas, hospitales y centros de belleza.Nos distinguimos por ofrecer un servicio eficiente, rápido y ecológico, cumpliendo con la normatividad sanitaria y garantizando que todas nuestras prendas estén completamente libres de virus y bacterias, asegurando una atención excepcional para cada uno de nuestros clientes.',
+        mission: 'Brindar un servicio de lavandería premium, ecológico y de alta calidad, especializado en la limpieza, desinfección y restauración de prendas, mediante un proceso profesional, rápido y eficiente, que garantice la satisfacción total de nuestros clientes.',
+        vision: 'Ser la lavandería premium de referencia en la región, destacando por nuestro compromiso con la calidad, la ecología y la innovación en el servicio. Buscamos expandir nuestra presencia a nivel nacional, siendo reconocidos por nuestra capacidad de ofrecer soluciones personalizadas, respetuosas con el medio ambiente y eficientes para negocios del sector hotelero y servicios relacionados.',
+        products: [
+            { title: 'Desinfección Hogar', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-21.png', import.meta.url).href },
+            { title: 'Desinfección Hoteles', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-23.png', import.meta.url).href },
+            { title: 'Desinfección Negocios', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-22.png', import.meta.url).href },
+        ],
+        contact: {
+            email: 'lavanderia.premium@hotmail.com',
+            phone: '983 133 81 11',
+            address: 'Av. Erick Paolo entre Av. Magisterio y Miguel Alemán',
+            phone2: '983 139 22 89',
+            address2: 'Av. Luis Manuel Sevilla entre Guyana y Paraguay',
+            facebook: 'https://www.facebook.com/LavanderiaPremium', // Enlace de ejemplo, el documento solo da el nombre 
+            website: 'https://lavanderiapremium.wixsite.com/lavanderiapemiumche',
+        },
+        color: 'rgb(40, 7, 14)', // Azul principal de Lavandería Premium 
+        fontPrincipal: 'ARTERIONONCOMMERCIAL REGULAR',
+        fontText: 'Comfortaa Regular', // O 'Poppins Regular' 
+        banner: new URL('../assets/banners/extintor/banners-59.png', import.meta.url).href, // Placeholder para el banner de Anticovid,
+        logo: 'https://dummyimage.com/500x400/09f/fff',
+        numero: ''
+    },
+    {
+        name: 'Ric-H2O',
+        slug: 'Ric-H2O',
+        heroTitle: 'Cuidado de Ropa Sostenible y de Calidad Superior',
+        heroSubtitle: 'Tus prendas impecables con respeto por el planeta.',
+        aboutText: 'Lavandería Premium Ecológica fue fundada en 2016 con el propósito de ofrecer un servicio de lavandería exclusivo y de alta calidad, comprometidos con el cuidado y tratamiento adecuado de las prendas. Nuestra misión es garantizar la limpieza, restauración y desinfección impecable de cada prenda, con el respaldo de un equipo altamente capacitado y profesional. Desde su creación, hemos logrado consolidarnos como líderes en la industria de lavandería de alto nivel en la ciudad de Chetumal, y actualmente extendemos nuestros servicios a destinos cercanos como Xul-Ha y Bacalar, atendiendo a más de 500 clientes frecuentes, entre los cuales destacan 15 hoteles, spas, hospitales y centros de belleza.Nos distinguimos por ofrecer un servicio eficiente, rápido y ecológico, cumpliendo con la normatividad sanitaria y garantizando que todas nuestras prendas estén completamente libres de virus y bacterias, asegurando una atención excepcional para cada uno de nuestros clientes.',
+        mission: 'Brindar un servicio de lavandería premium, ecológico y de alta calidad, especializado en la limpieza, desinfección y restauración de prendas, mediante un proceso profesional, rápido y eficiente, que garantice la satisfacción total de nuestros clientes.',
+        vision: 'Ser la lavandería premium de referencia en la región, destacando por nuestro compromiso con la calidad, la ecología y la innovación en el servicio. Buscamos expandir nuestra presencia a nivel nacional, siendo reconocidos por nuestra capacidad de ofrecer soluciones personalizadas, respetuosas con el medio ambiente y eficientes para negocios del sector hotelero y servicios relacionados.',
+        products: [
+            { title: 'Desinfección Hogar', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-21.png', import.meta.url).href },
+            { title: 'Desinfección Hoteles', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-23.png', import.meta.url).href },
+            { title: 'Desinfección Negocios', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/anticovid/iconos-22.png', import.meta.url).href },
+        ],
+        contact: {
+            email: 'lavanderia.premium@hotmail.com',
+            phone: '983 133 81 11',
+            address: 'Av. Erick Paolo entre Av. Magisterio y Miguel Alemán',
+            phone2: '983 139 22 89',
+            address2: 'Av. Luis Manuel Sevilla entre Guyana y Paraguay',
+            facebook: 'https://www.facebook.com/LavanderiaPremium', // Enlace de ejemplo, el documento solo da el nombre 
+            website: 'https://lavanderiapremium.wixsite.com/lavanderiapemiumche',
+        },
+        color: 'rgb(16, 84, 128)', // Azul principal de Lavandería Premium 
+        fontPrincipal: 'ARTERIONONCOMMERCIAL REGULAR',
+        fontText: 'Comfortaa Regular', // O 'Poppins Regular' 
+        banner: new URL('../assets/banners/lavanderia/banners-55.png', import.meta.url).href, // Placeholder para el banner de Anticovid,
+        logo: 'https://dummyimage.com/500x400/09f/fff',
+        numero: ''
+    },
+    {
+        name: 'Jardineria Gubernamental',
+        slug: 'Jardineria-Gubernamental',
+        heroTitle: 'Cuidado de Ropa Sostenible y de Calidad Superior',
+        heroSubtitle: 'Tus prendas impecables con respeto por el planeta.',
+        aboutText: 'Especialistas en mantenimiento de áreas verdes institucionales, la empresa se dedica a conservar espacios públicos limpios, ordenados y en armonía con el entorno.',
+        mission: 'Mantener y embellecer espacios verdes gubernamentales mediante técnicas sostenibles y mano de obra especializada.',
+        vision: 'Ser el referente estatal en jardinería institucional, aportando bienestar y estética a los entornos públicos.',
+        products: [
+            { title: 'Jardinería Negocios', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/jasdinera/iconos-27.png', import.meta.url).href },
+            { title: 'Jardinería Oficinas', subTitle: '', description: '', price: '53', image: new URL('../assets/productos/jasdinera/iconos-28.png', import.meta.url).href },
+        ],
+        contact: {
+            email: 'lavanderia.premium@hotmail.com',
+            phone: '983 133 81 11',
+            address: 'Av. Erick Paolo entre Av. Magisterio y Miguel Alemán',
+            phone2: '983 139 22 89',
+            address2: 'Av. Luis Manuel Sevilla entre Guyana y Paraguay',
+            facebook: 'https://www.facebook.com/LavanderiaPremium', // Enlace de ejemplo, el documento solo da el nombre 
+            website: 'https://lavanderiapremium.wixsite.com/lavanderiapemiumche',
+        },
+        color: 'rgb(19, 44, 4)', // Azul principal de Lavandería Premium 
+        fontPrincipal: 'ARTERIONONCOMMERCIAL REGULAR',
+        fontText: 'Comfortaa Regular', // O 'Poppins Regular' 
+        banner: new URL('../assets/banners/jardineria/banners-58.png', import.meta.url).href, // Placeholder para el banner de Anticovid,
+        logo: 'https://dummyimage.com/500x400/09f/fff',
+        numero: '9831208570'
     },
 ];
 
@@ -535,10 +694,5 @@ onMounted(() => {
     font-style: normal;
 }
 
-.hero-section {
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.hero-section {}
 </style>

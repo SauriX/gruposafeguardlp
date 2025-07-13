@@ -5,33 +5,19 @@
         </div>
 
         <div class="card-content p-4 text-start d-flex flex-column flex-grow-1">
-            <h5 :style="{ fontFamily: fontPrincipal + ', sans-serif' }" class="product-title fw-bold text-dark mb-2">
+<!--             <h5 :style="{ fontFamily: fontPrincipal + ', sans-serif' }" class="product-title fw-bold text-dark mb-2">
                 {{ product.title }}
             </h5>
 
-            <p class="product-description text-muted small flex-grow-1 mb-3"
-                :style="{ fontFamily: fontText + ', sans-serif' }">
-                {{ product.description }}
-            </p>
+            <h5 :style="{ fontFamily: fontPrincipal + ', sans-serif' }" class="product-title fw-bold text-dark mb-2">
+                {{ product.subTitle }}
+            </h5> -->
 
-            <div class="price-container mb-3" :style="{ fontFamily: fontText + ', sans-serif' }">
-                <span class="me-2 text-dark fw-medium">Precio:</span>
-                <template v-if="product.discountPrice && product.price">
-                    <span class="original-price text-muted text-decoration-line-through me-2">
-                        ${{ product.discountPrice }}
-                    </span>
-                    <span class="current-price text-success fw-bold fs-5">
-                        ${{ product.price }}
-                    </span>
-                </template>
-                <template v-else-if="product.price">
-                    <span class="current-price text-primary fw-bold fs-5">
-                        ${{ product.price }}
-                    </span>
-                </template>
-            </div>
-
-            <button class="buy-now-button fw-bold mt-auto">Comprar Ahora</button>
+            <a class="buy-now-button fw-bold mt-auto text-center text-white text-decoration-none"
+                :href="`https://wa.me/${whatsappNumber}?text=Hola,%20me%20interesa%20el%20producto:%20${encodeURIComponent(product.title)}`"
+                target="_blank" rel="noopener">
+                Cotizar por WhatsApp
+            </a>
         </div>
     </div>
 </template>
@@ -40,21 +26,22 @@
 import { defineProps } from "vue";
 
 const props = defineProps<{
-product: {
-    title: string;
-    description: string;
-    icon?: string; // Nombre de la clase de icono (ej. 'bi-clipboard-check')
-    image?: string; // Ruta de la imagen referencial del servicio
-    price?: string; // Precio del servicio
-    discountPrice? :string;
-}
+    product: {
+        title: string;
+        subTitle: string;
+        description: string;
+        icon?: string;
+        image?: string;
+    };
     fontPrincipal: string;
     fontText: string;
     getAssetUrl: (path: string) => string;
+    whatsappNumber: string;
 }>();
 
 const defaultImage = "https://dummyimage.com/300.png/09f/fff";
 </script>
+
 <style scoped>
 .product-card {
     background: white;
@@ -68,24 +55,22 @@ const defaultImage = "https://dummyimage.com/300.png/09f/fff";
 
 .image-wrapper {
     background-color: #f7f7f7;
-    height: 190px;
+    max-height: 250px;
+    height: auto;
     position: relative;
-    /* IMPORTANTE para el posicionamiento absoluto */
     overflow: hidden;
-    display: block;
-    /* para evitar flex centrar que no funciona con absolute */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-image {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Cambia a 'contain' si prefieres que no se recorte */
+    height: auto;
+    object-fit: contain;
     transition: transform 0.3s ease;
 }
+
 
 .product-card:hover .product-image {
     transform: scale(1.05);
@@ -113,24 +98,9 @@ const defaultImage = "https://dummyimage.com/300.png/09f/fff";
     -webkit-box-orient: vertical;
 }
 
-.price-container {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    font-size: 0.95rem;
-}
-
-.original-price {
-    font-size: 1rem;
-    color: #999;
-}
-
-.current-price {
-    font-size: 1.3rem;
-}
-
 .buy-now-button {
-    background: linear-gradient(90deg, #5d5dff, #7777ff);
+    background: linear-gradient(90deg, #25d366, #128c7e);
+    /* WhatsApp colors */
     color: white;
     border: none;
     border-radius: 10px;
@@ -138,9 +108,10 @@ const defaultImage = "https://dummyimage.com/300.png/09f/fff";
     font-size: 0.95rem;
     transition: background 0.3s ease;
     width: 100%;
+    display: inline-block;
 }
 
 .buy-now-button:hover {
-    background: linear-gradient(90deg, #4545e0, #5d5dff);
+    background: linear-gradient(90deg, #128c7e, #075e54);
 }
 </style>
