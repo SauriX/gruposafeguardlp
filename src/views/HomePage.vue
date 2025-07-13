@@ -27,8 +27,13 @@
             </div>
         </nav>
 
-        <header class="text-white text-center py-5 hero-section"
-            :style="{ backgroundImage: 'url(' + heroBanner + ')', backgroundColor: primaryColor, backgroundSize: 'cover', backgroundPosition: 'center' }">
+        <header class="text-white text-center py-5 hero-section" :style="{
+            backgroundImage: 'url(' + heroBanner + ')', 
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            height: '540px'
+        }">
             <div class="container">
                 <h1 class="display-4 mb-3" :style="{ fontFamily: 'Myriad Pro Bold, sans-serif' }">Grupo Safeguard:
                     Soluciones Integrales para Tu Bienestar y Entorno</h1>
@@ -224,28 +229,28 @@ const brands: Brand[] = [
         slug: 'pest-control-total',
         description: 'Control de plagas integral y amigable con el ambiente.',
         logo: require('@/assets/productos/safeguard/pest.png'),
-        color: 'rgb(196, 224, 62)', // Verde lima de Pest Control Total
+        color: 'rgb(9, 79, 41)', // Verde lima de Pest Control Total
     },
     {
         name: 'Miss Clean',
         slug: 'miss-clean',
         description: 'Servicios de limpieza profunda para hogares y oficinas.',
         logo: require('@/assets/productos/safeguard/mssclean.png'),
-        color: 'rgb(165, 189, 119)', // Verde claro de Miss Clean
+        color: 'rgb(221, 120, 144)', // Verde claro de Miss Clean
     },
     {
         name: 'Jardineria Gubernamental',
         slug: 'Jardineria-Gubernamental',
         description: '',
         logo: require('@/assets/productos/safeguard/jardineria.png'),
-        color: '#80B51F', // Azul oscuro de Lavandería Premium Ecológica
+        color: '#3D432C', // Azul oscuro de Lavandería Premium Ecológica
     },
     {
         name: 'Anticovid',
         slug: 'anticovid',
         description: 'Soluciones profesionales de desinfección y sanitización.',
         logo: require('@/assets/productos/safeguard/anticovid.png'),
-        color: 'rgb(167, 44, 39)', // Rojo de Anticovid
+        color: '#382968', // Rojo de Anticovid
     },
 
 
@@ -270,7 +275,7 @@ const brands: Brand[] = [
         slug: 'Ric-H2O',
         description: '!Vive bien,bebe rico¡',
         logo: require('@/assets/productos/safeguard/rich2o.png'),
-        color: '#00ACC7', // Azul oscuro de Lavandería Premium Ecológica
+        color: '#B4E0E5', // Azul oscuro de Lavandería Premium Ecológica
     },
 ];
 
